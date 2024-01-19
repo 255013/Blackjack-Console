@@ -44,6 +44,10 @@ internal class Program {
         String? input = Console.ReadLine();
         if(input == "Hit") {
             Console.Clear();
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Dealer's first card is: " + Dealer.hand[0].GetName());
+            Console.WriteLine("Dealer's second card is hidden.");
+            Console.WriteLine("-----------------------------------");
             Card newCard = CardPicker.DrawSingleCard();
             Player.AppendHand(newCard);
 
