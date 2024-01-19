@@ -10,19 +10,13 @@ namespace BlackjackConsole {
         static Random random = new();
 
         public static Card DrawSingleCard() {
-            Card card = new Card();
-            card.value = Int32.Parse(RandomValue());
-            card.suit = RandomSuit();
+            Card card = new Card(RandomValue(), RandomSuit());
             return card;
         }
 
-        private static string RandomValue() {
+        private static int RandomValue() {
             int value = random.Next(1, 14); //Non-inclusive method. Grants value from 1-13.
-            if (value == 1) return "Ace";
-            if (value == 11) return "Jack";
-            if (value == 12) return "Queen";
-            if (value == 13) return "King";
-            return value.ToString();
+            return value;
         }
 
         private static string RandomSuit() {

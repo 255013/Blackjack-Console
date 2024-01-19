@@ -8,12 +8,16 @@ internal class Program {
         Console.WriteLine("You have chosen to bet: " + Player.bet.ToString());
 
         Dealer.AppendHand(CardPicker.DrawSingleCard());
-        Console.WriteLine("Dealer's first card is: " + Dealer.hand[0].name);
+        Console.WriteLine("Dealer's first card is: " + Dealer.hand[0].getName());
+
+        Dealer.AppendHand(CardPicker.DrawSingleCard());
+        Console.WriteLine("Dealer's second card is hidden.");
 
         Player.AppendHand(CardPicker.DrawSingleCard());
-        Console.WriteLine("Player's first card is: " + Player.hand[0].name);
+        Console.WriteLine("Player's first card is: " + Player.hand[0].getName());
 
-
+        Player.AppendHand(CardPicker.DrawSingleCard());
+        Console.WriteLine("Player's second card is: " + Player.hand[1].getName());
     }
 
     private static int GetBetAmountFromPlayer() {
@@ -28,5 +32,9 @@ internal class Program {
             Console.WriteLine("Invalid input or not enough balance");
             return GetBetAmountFromPlayer();    //Retry valid user input
         }
+    }
+
+    private static int GetActionFromPlayer() {
+        return 0;
     }
 }
