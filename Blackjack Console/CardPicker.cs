@@ -10,13 +10,28 @@ namespace BlackjackConsole {
         static Random random = new();
 
         public static Card DrawSingleCard() {
-            Card card = new Card(RandomValue(), RandomSuit());
+            int randValue = RandomValue();
+            Card card = new Card(RandomFace(randValue), RandomValueFix(randValue), RandomSuit());
             return card;
         }
 
         private static int RandomValue() {
             int value = random.Next(1, 14); //Non-inclusive method. Grants value from 1-13.
             return value;
+        }
+        private static int RandomValueFix(int value) {
+            if(value > 10) {
+                value = 10;
+            };
+            return value;
+        }
+
+        private static String RandomFace(int value) {
+            if (value == 1)   return "Ace";
+            if (value == 11)  return "Ace";
+            if (value == 12)  return "Queen";
+            if (value == 13)  return "King";
+            return "";
         }
 
         private static string RandomSuit() {

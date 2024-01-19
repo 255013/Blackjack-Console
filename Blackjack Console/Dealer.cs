@@ -13,5 +13,22 @@ namespace BlackjackConsole {
             hand.Add(card);
             return hand;
         }
+
+        public static int CalculateDealerHandValue() {
+            int sum = 0;
+            foreach (var card in hand) {
+                sum += card.value;
+            }
+            return sum;
+        }
+
+        public static void PrintDealerHand() {
+            Console.WriteLine("-----------------------------------");
+            foreach (Card card in hand) {
+                Console.WriteLine("Player card: " + card.GetName());
+            }
+            Console.WriteLine("Dealer's current hand value is: " + CalculateDealerHandValue());
+            Console.WriteLine("-----------------------------------");
+        }
     }
 }
