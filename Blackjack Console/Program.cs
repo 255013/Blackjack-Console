@@ -6,6 +6,8 @@ internal class Program {
     }
 
     private static void InitializeRound() {
+        Player.hand = new List<Card>();
+        Dealer.hand = new List<Card>();
         Console.WriteLine("Your current balance is: " + Player.balance.ToString());
         Console.WriteLine("Please input the amount you would like to bet: ");
         GetBetAmountFromPlayer();
@@ -28,7 +30,7 @@ internal class Program {
         if(input != null) {                     //Make sure bet is not null
             Player.bet = Int32.Parse(input);    //Assign input to player class value
         }
-        if(Player.bet < Player.balance) {       //Make sure bet is valid (does not exceed player balance)
+        if(Player.bet <= Player.balance) {       //Make sure bet is valid (does not exceed player balance)
             return Player.bet;
         }
         else {
@@ -51,6 +53,7 @@ internal class Program {
             if (Player.CalculatePlayerHandValue() > 21) {
                 Console.WriteLine("Bust. Hand value exceeded 21.");
                 Player.balance -= Player.bet;
+                AskPlayerToPlayAgain();
             }
             else {
                 GetActionFromPlayer();
@@ -69,19 +72,27 @@ internal class Program {
         if(Dealer.CalculateDealerHandValue() > 21) {
             Console.WriteLine("Dealer bust. Dealer's hand value exceeded 21. " + Player.bet + " has been added to player's balance");
             Player.balance += Player.bet;
+            AskPlayerToPlayAgain();
         }
         else if(Player.CalculatePlayerHandValue() > Dealer.CalculateDealerHandValue()) {
             if(Player.CalculatePlayerHandValue() == 21) {
                 Player.balance += (2 * Player.bet);
+                AskPlayerToPlayAgain();
             }
             else {
                 Console.WriteLine("Player won. " + Player.bet + " has been added to player's balance");
                 Player.balance += Player.bet;
+                AskPlayerToPlayAgain();
             }
+        }
+        else if (Player.CalculatePlayerHandValue() == Dealer.CalculateDealerHandValue()) {
+            Console.WriteLine("Push. No balance has been deducted from player's balance");
+            AskPlayerToPlayAgain();
         }
         else {
             Console.WriteLine("Dealer won. " + Player.bet + " has been deducted from player's balance");
             Player.balance -= Player.bet;
+            AskPlayerToPlayAgain();
         }
     }
 
@@ -92,6 +103,24 @@ internal class Program {
         }
         else {
             Dealer.PrintDealerHand();
+        }
+    }
+
+    private static void AskPlayerToPlayAgain() {
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine("Would you like to play again? (yes/no)");
+        String? input = Console.ReadLine();
+        if(input == "yes") {
+            Console.Clear();
+            InitializeRound();
+        } else if (input == "no") {
+            Console.Clear();
+            Console.WriteLine("Thank you for playing. Goodbye.");
+        }
+        else {
+            Console.Clear();
+            Console.WriteLine("Please input a valid option");
+            AskPlayerToPlayAgain();
         }
     }
 }
